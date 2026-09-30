@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}System Logs{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">AUDIT TRAIL</span><h1>System logs</h1><p>Recent authentication and system activity.</p></div></div>
+<div class="card table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Action</th><th>Entity</th><th>Details</th></tr></thead><tbody>
+{% for log in logs %}<tr><td>{{ log.created_at.strftime('%b %d, %Y %I:%M %p') }}</td><td>{{ log.user.full_name if log.user else 'System' }}</td><td><span class="status neutral">{{ log.action }}</span></td><td>{{ log.entity or '—' }}{% if log.entity_id %} #{{ log.entity_id }}{% endif %}</td><td>{{ log.details or '—' }}</td></tr>
+{% else %}<tr><td colspan="5" class="empty">No logs available.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

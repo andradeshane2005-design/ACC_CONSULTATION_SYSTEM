@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">PERSONAL INFORMATION</span><h1>My profile</h1><p>Keep your contact and academic information updated.</p></div></div>
+<form method="post" class="card form-grid">
+<label>First name<input name="first_name" required value="{{ current_user.first_name }}"></label>
+<label>Last name<input name="last_name" required value="{{ current_user.last_name }}"></label>
+<label>Email<input value="{{ current_user.email }}" disabled></label>
+<label>Student ID<input value="{{ current_user.student_id or '' }}" disabled></label>
+<label>Phone<input name="phone" value="{{ current_user.phone or '' }}"></label>
+<label>Program<input name="program" value="{{ current_user.program or '' }}"></label>
+<label>Year level<input name="year_level" value="{{ current_user.year_level or '' }}"></label>
+<label>Password <small>Leave blank to keep current password.</small><input type="password" name="password"></label>
+<div class="full-span form-actions"><button class="btn btn-primary">Save Profile</button></div>
+</form>
+{% endblock %}

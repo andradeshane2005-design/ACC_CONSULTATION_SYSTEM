@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sign In · ACC Health Portal{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-brand">
+        <span class="bee-logo big">🐝</span>
+        <span class="eyebrow">ABUYOG COMMUNITY COLLEGE</span>
+        <h1>Welcome back.</h1>
+        <p>Sign in to access the ACC Health Consultation System.</p>
+    </div>
+    <form method="post" class="card auth-card">
+        <div class="section-heading compact">
+            <span class="eyebrow">SECURE ACCESS</span>
+            <h2>Sign in</h2>
+        </div>
+        <label>Email address
+            <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label>Password
+            <input type="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+        </label>
+        <button class="btn btn-primary full" type="submit">Sign In →</button>
+        <p class="form-note">Your account role determines which dashboard and features you can access.</p>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Medical Dashboard{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">MEDICAL EXPERT</span><h1>Health center overview</h1><p>Manage student records, requests, and appointments.</p></div><a class="btn btn-primary" href="{{ url_for('medical.create_record') }}">+ New Record</a></div>
+<div class="stats-grid">
+<div class="stat-card"><span>Students</span><strong>{{ stats.students }}</strong><i>◎</i></div>
+<div class="stat-card"><span>Medical Records</span><strong>{{ stats.records }}</strong><i>▣</i></div>
+<div class="stat-card"><span>Pending Requests</span><strong>{{ stats.pending_requests }}</strong><i>✚</i></div>
+<div class="stat-card"><span>Appointment Requests</span><strong>{{ stats.appointments }}</strong><i>◷</i></div>
+</div>
+<section class="card"><div class="card-head"><h2>Recent health requests</h2><a href="{{ url_for('medical.requests') }}">View all</a></div>
+<div class="table-wrap"><table><thead><tr><th>Student</th><th>Subject</th><th>Status</th><th>Date</th></tr></thead><tbody>
+{% for item in requests %}<tr><td>{{ item.student.full_name }}</td><td>{{ item.subject }}</td><td><span class="status {{ item.status|lower }}">{{ item.status }}</span></td><td>{{ item.created_at.strftime('%b %d, %Y') }}</td></tr>{% else %}<tr><td colspan="4" class="empty">No health requests.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

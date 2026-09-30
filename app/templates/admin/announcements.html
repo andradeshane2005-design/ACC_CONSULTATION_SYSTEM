@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">COMMUNICATION</span><h1>Announcements</h1><p>Publish health and campus updates for students.</p></div></div>
+<div class="two-col">
+<form method="post" class="card">
+    <h2>New announcement</h2>
+    <label>Title<input name="title" required></label>
+    <label>Message<textarea name="body" rows="7" required></textarea></label>
+    <button class="btn btn-primary">Publish announcement</button>
+</form>
+<section class="stack">
+{% for item in announcements %}
+<div class="card announcement-card">
+    <div class="card-head"><span class="status {{ 'success' if item.is_active else 'danger' }}">{{ 'Published' if item.is_active else 'Hidden' }}</span>
+    <form method="post" action="{{ url_for('admin.toggle_announcement', announcement_id=item.id) }}"><button class="btn btn-small">{{ 'Hide' if item.is_active else 'Publish' }}</button></form></div>
+    <h3>{{ item.title }}</h3><p>{{ item.body }}</p><small>{{ item.created_at.strftime('%B %d, %Y %I:%M %p') }}</small>
+</div>
+{% else %}<div class="card empty">No announcements yet.</div>{% endfor %}
+</section>
+</div>
+{% endblock %}

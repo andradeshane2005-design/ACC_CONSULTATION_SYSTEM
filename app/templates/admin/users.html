@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}User Management{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><span class="eyebrow">ADMINISTRATION</span><h1>User management</h1><p>Create, edit, activate, deactivate, and assign roles.</p></div>
+    <a class="btn btn-primary" href="{{ url_for('admin.create_user') }}">+ Create User</a>
+</div>
+<div class="card">
+    <form class="searchbar" method="get"><input name="q" value="{{ q }}" placeholder="Search name, email, or student ID"><button class="btn btn-dark">Search</button></form>
+    <div class="table-wrap"><table>
+    <thead><tr><th>User</th><th>Student ID</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td><strong>{{ user.full_name }}</strong><small>{{ user.email }}</small></td>
+        <td>{{ user.student_id or '—' }}</td>
+        <td>{% for role in user.roles %}<span class="tag">{{ role.name }}</span>{% endfor %}</td>
+        <td><span class="status {{ 'success' if user.is_active else 'danger' }}">{{ 'Active' if user.is_active else 'Inactive' }}</span></td>
+        <td class="actions"><a class="btn btn-small" href="{{ url_for('admin.edit_user', user_id=user.id) }}">Edit</a>
+            {% if user.id != current_user.id %}
+            <form method="post" action="{{ url_for('admin.toggle_user', user_id=user.id) }}"><button class="btn btn-small {{ 'danger-btn' if user.is_active else 'success-btn' }}">{{ 'Deactivate' if user.is_active else 'Activate' }}</button></form>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}<tr><td colspan="5" class="empty">No users found.</td></tr>{% endfor %}
+    </tbody></table></div>
+</div>
+{% endblock %}

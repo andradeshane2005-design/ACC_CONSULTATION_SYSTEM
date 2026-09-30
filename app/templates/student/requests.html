@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}My Health Requests{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">CONSULTATION</span><h1>My health requests</h1><p>Submit a concern and review responses from the Medical Expert.</p></div></div>
+<div class="two-col">
+<form method="post" class="card"><h2>New health request</h2><label>Subject<input name="subject" required placeholder="e.g. Consultation request"></label><label>Describe your concern<textarea name="description" rows="8" required placeholder="Provide relevant information..."></textarea></label><button class="btn btn-primary">Submit Request</button></form>
+<section class="stack">
+{% for item in requests %}<article class="card"><div class="card-head"><h3>{{ item.subject }}</h3><span class="status {{ item.status|lower }}">{{ item.status }}</span></div><p>{{ item.description }}</p>{% if item.response %}<div class="response"><strong>Medical Expert response</strong><p>{{ item.response }}</p></div>{% endif %}<small>{{ item.created_at.strftime('%B %d, %Y %I:%M %p') }}</small></article>{% else %}<div class="card empty">No health requests yet.</div>{% endfor %}
+</section>
+</div>
+{% endblock %}

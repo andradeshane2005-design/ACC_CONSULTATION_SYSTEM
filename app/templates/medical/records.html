@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Medical Records{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">HEALTH RECORDS</span><h1>Medical records</h1><p>Securely manage student medical information.</p></div><a class="btn btn-primary" href="{{ url_for('medical.create_record') }}">+ New Record</a></div>
+<div class="card table-wrap"><table><thead><tr><th>Student</th><th>Blood Type</th><th>Allergies</th><th>Conditions</th><th>Updated</th><th></th></tr></thead><tbody>
+{% for r in records %}<tr><td><strong>{{ r.student.full_name }}</strong><small>{{ r.student.student_id or r.student.email }}</small></td><td>{{ r.blood_type or '—' }}</td><td>{{ r.allergies or 'None noted' }}</td><td>{{ r.medical_conditions or 'None noted' }}</td><td>{{ r.updated_at.strftime('%b %d, %Y') }}</td><td><a class="btn btn-small" href="{{ url_for('medical.edit_record', record_id=r.id) }}">Edit</a></td></tr>
+{% else %}<tr><td colspan="6" class="empty">No records yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

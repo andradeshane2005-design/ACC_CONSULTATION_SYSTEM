@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ACC Health Portal{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+<body>
+    <div class="bee-bg"></div>
+    <header class="topbar">
+        <a class="brand" href="{{ url_for('main.index') }}">
+            <span class="bee-logo">🐝</span>
+            <span>
+                <strong>ABUYOG</strong>
+                <small>COMMUNITY COLLEGE</small>
+            </span>
+        </a>
+        {% if current_user.is_authenticated %}
+        <div class="top-actions">
+            <span class="role-pill">{{ current_user.primary_role }}</span>
+            <a class="avatar-link" href="{{ url_for('main.dashboard') }}">{{ current_user.first_name[0] }}{{ current_user.last_name[0] }}</a>
+        </div>
+        {% else %}
+        <a class="btn btn-dark" href="{{ url_for('auth.login') }}">Sign In</a>
+        {% endif %}
+    </header>
+
+    <div class="page-shell">
+        {% if current_user.is_authenticated %}
+        <aside class="sidebar">
+            <div class="profile-mini">
+                <div class="avatar">{{ current_user.first_name[0] }}{{ current_user.last_name[0] }}</div>
+                <div>
+                    <strong>{{ current_user.full_name }}</strong>
+                    <span>{{ current_user.primary_role }}</span>
+                </div>
+            </div>
+            <nav>
+                <a href="{{ url_for('main.dashboard') }}">⌂ <span>Dashboard</span></a>
+                {% if current_user.has_role("Super Admin") %}
+                    <a href="{{ url_for('admin.users') }}">♟ <span>Users</span></a>
+                    <a href="{{ url_for('admin.announcements') }}">✦ <span>Announcements</span></a>
+                    <a href="{{ url_for('admin.logs') }}">▤ <span>System Logs</span></a>
+                {% elif current_user.has_role("Medical Expert") %}
+                    <a href="{{ url_for('medical.records') }}">▣ <span>Medical Records</span></a>
+                    <a href="{{ url_for('medical.requests') }}">✚ <span>Health Requests</span></a>
+                    <a href="{{ url_for('medical.appointments') }}">◷ <span>Appointments</span></a>
+                    <a href="{{ url_for('medical.reports') }}">◫ <span>Health Reports</span></a>
+                {% elif current_user.has_role("Student") %}
+                    <a href="{{ url_for('student.profile') }}">◎ <span>My Profile</span></a>
+                    <a href="{{ url_for('student.requests') }}">✚ <span>Health Requests</span></a>
+                    <a href="{{ url_for('student.history') }}">▣ <span>Medical History</span></a>
+                    <a href="{{ url_for('student.appointments') }}">◷ <span>Appointments</span></a>
+                    <a href="{{ url_for('student.announcements') }}">✦ <span>Announcements</span></a>
+                {% endif %}
+            </nav>
+            <a class="logout" href="{{ url_for('auth.logout') }}">↪ <span>Logout</span></a>
+        </aside>
+        {% endif %}
+
+        <main class="content {% if not current_user.is_authenticated %}full-content{% endif %}">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

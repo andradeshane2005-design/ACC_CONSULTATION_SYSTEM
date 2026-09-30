@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">SCHEDULING</span><h1>Appointments</h1><p>Review student consultation appointment requests.</p></div></div>
+<div class="card table-wrap"><table><thead><tr><th>Student</th><th>Date</th><th>Reason</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for a in appointments %}<tr><td>{{ a.student.full_name }}</td><td>{{ a.appointment_date.strftime('%b %d, %Y %I:%M %p') }}</td><td>{{ a.reason }}</td><td><span class="status {{ a.status|lower }}">{{ a.status }}</span></td><td><form method="post" action="{{ url_for('medical.update_appointment', appointment_id=a.id) }}" class="inline-form"><select name="status"><option {% if a.status == 'Requested' %}selected{% endif %}>Requested</option><option {% if a.status == 'Confirmed' %}selected{% endif %}>Confirmed</option><option {% if a.status == 'Completed' %}selected{% endif %}>Completed</option><option {% if a.status == 'Cancelled' %}selected{% endif %}>Cancelled</option></select><input name="notes" value="{{ a.notes or '' }}" placeholder="Notes"><button class="btn btn-small">Save</button></form></td></tr>
+{% else %}<tr><td colspan="5" class="empty">No appointments.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

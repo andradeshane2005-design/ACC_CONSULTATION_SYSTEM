@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">CONSULTATION SCHEDULE</span><h1>Appointments</h1><p>Request and track your health consultation appointments.</p></div></div>
+<div class="two-col">
+<form method="post" class="card"><h2>Request an appointment</h2><label>Date and time<input type="datetime-local" name="appointment_date" required></label><label>Reason<input name="reason" required placeholder="Reason for consultation"></label><button class="btn btn-primary">Request Appointment</button></form>
+<section class="stack">
+{% for a in appointments %}<article class="card"><div class="card-head"><h3>{{ a.appointment_date.strftime('%B %d, %Y') }}</h3><span class="status {{ a.status|lower }}">{{ a.status }}</span></div><p>{{ a.appointment_date.strftime('%I:%M %p') }} · {{ a.reason }}</p>{% if a.notes %}<div class="response"><strong>Notes</strong><p>{{ a.notes }}</p></div>{% endif %}</article>{% else %}<div class="card empty">No appointment requests.</div>{% endfor %}
+</section>
+</div>
+{% endblock %}

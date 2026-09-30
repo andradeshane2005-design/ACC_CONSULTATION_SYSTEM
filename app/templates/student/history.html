@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Medical History{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">PERSONAL HEALTH</span><h1>Medical history</h1><p>View medical information recorded for your account.</p></div></div>
+{% for r in records %}
+<section class="card detail-grid">
+<div><span>Blood type</span><strong>{{ r.blood_type or 'Not recorded' }}</strong></div>
+<div><span>Allergies</span><strong>{{ r.allergies or 'None recorded' }}</strong></div>
+<div><span>Medical conditions</span><strong>{{ r.medical_conditions or 'None recorded' }}</strong></div>
+<div><span>Medications</span><strong>{{ r.medications or 'None recorded' }}</strong></div>
+<div><span>Emergency contact</span><strong>{{ r.emergency_contact or 'Not recorded' }}</strong></div>
+<div><span>Emergency phone</span><strong>{{ r.emergency_phone or 'Not recorded' }}</strong></div>
+<div class="full-span"><span>Notes</span><p>{{ r.notes or 'No additional notes.' }}</p></div>
+</section>
+{% else %}<div class="card empty">No medical history has been recorded for your account.</div>{% endfor %}
+{% endblock %}

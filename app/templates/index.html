@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}ACC Health Portal{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">🐝 ABUYOG COMMUNITY COLLEGE</span>
+        <h1>Health consultation made <span>simple.</span></h1>
+        <p>A secure student health portal for consultation requests, medical records, appointments, and campus announcements.</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Enter Health Portal →</a>
+        </div>
+    </div>
+    <div class="honey-card">
+        <div class="honeycomb">⬡</div>
+        <h3>Care. Connect. Consult.</h3>
+        <p>Designed for ACC students and health professionals.</p>
+    </div>
+</section>
+
+<section class="section-heading">
+    <span class="eyebrow">CAMPUS UPDATES</span>
+    <h2>Latest announcements</h2>
+</section>
+<div class="announcement-grid">
+{% for item in announcements %}
+    <article class="card announcement-card">
+        <span class="tag">ACC HEALTH</span>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.body }}</p>
+        <small>{{ item.created_at.strftime('%B %d, %Y') }}</small>
+    </article>
+{% else %}
+    <div class="card empty">No announcements available.</div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">STUDENT PORTAL</span><h1>Hello, {{ current_user.first_name }}.</h1><p>Manage your health requests, appointments, profile, and personal records.</p></div><a class="btn btn-primary" href="{{ url_for('student.requests') }}">+ Health Request</a></div>
+<div class="student-hero card"><div><span class="eyebrow">YOUR HEALTH SPACE</span><h2>Care starts with communication.</h2><p>Use the portal to reach the Medical Expert and keep your information up to date.</p></div><div class="bee-art">🐝</div></div>
+<div class="two-col">
+<section class="card"><div class="card-head"><h2>My recent requests</h2><a href="{{ url_for('student.requests') }}">View all</a></div>
+{% for item in requests %}<div class="list-item"><div><strong>{{ item.subject }}</strong><small>{{ item.created_at.strftime('%b %d, %Y') }}</small></div><span class="status {{ item.status|lower }}">{{ item.status }}</span></div>{% else %}<div class="empty">You have not submitted a request.</div>{% endfor %}
+</section>
+<section class="card"><div class="card-head"><h2>Announcements</h2><a href="{{ url_for('student.announcements') }}">View all</a></div>
+{% for item in announcements %}<div class="list-item"><div><strong>{{ item.title }}</strong><small>{{ item.created_at.strftime('%b %d, %Y') }}</small></div></div>{% else %}<div class="empty">No announcements.</div>{% endfor %}
+</section>
+</div>
+{% endblock %}

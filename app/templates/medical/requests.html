@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Health Requests{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">CONSULTATIONS</span><h1>Health requests</h1><p>Review and respond to student consultation requests.</p></div></div>
+<div class="stack">
+{% for item in requests %}
+<article class="card request-card">
+<div class="card-head"><div><span class="tag">{{ item.student.student_id or 'STUDENT' }}</span><h2>{{ item.subject }}</h2></div><span class="status {{ item.status|lower }}">{{ item.status }}</span></div>
+<p class="muted">From {{ item.student.full_name }} · {{ item.created_at.strftime('%B %d, %Y %I:%M %p') }}</p>
+<p>{{ item.description }}</p>
+{% if item.response %}<div class="response"><strong>Current response</strong><p>{{ item.response }}</p></div>{% endif %}
+<form method="post" action="{{ url_for('medical.respond_request', request_id=item.id) }}" class="response-form">
+<select name="status"><option {% if item.status == 'Responded' %}selected{% endif %}>Responded</option><option {% if item.status == 'Pending' %}selected{% endif %}>Pending</option><option {% if item.status == 'Closed' %}selected{% endif %}>Closed</option></select>
+<textarea name="response" rows="3" placeholder="Write a response...">{{ item.response or '' }}</textarea>
+<button class="btn btn-primary">Save Response</button>
+</form>
+</article>
+{% else %}<div class="card empty">No requests available.</div>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Health Reports{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">REPORTING</span><h1>Health reports</h1><p>A quick operational summary of the health center.</p></div></div>
+<div class="stats-grid">
+<div class="stat-card"><span>Total records</span><strong>{{ total_records }}</strong><i>▣</i></div>
+<div class="stat-card"><span>Total requests</span><strong>{{ total_requests }}</strong><i>✚</i></div>
+<div class="stat-card"><span>Pending</span><strong>{{ pending }}</strong><i>◷</i></div>
+<div class="stat-card"><span>Responded</span><strong>{{ responded }}</strong><i>✓</i></div>
+</div>
+<div class="card report-card"><h2>Appointments</h2><div class="big-number">{{ appointments }}</div><p>Total appointment requests recorded in the system.</p></div>
+{% endblock %}

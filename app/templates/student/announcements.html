@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">CAMPUS UPDATES</span><h1>Announcements</h1><p>Latest health center and campus notices.</p></div></div>
+<div class="announcement-grid">{% for item in announcements %}<article class="card announcement-card"><span class="tag">ACC HEALTH</span><h2>{{ item.title }}</h2><p>{{ item.body }}</p><small>{{ item.created_at.strftime('%B %d, %Y') }}</small></article>{% else %}<div class="card empty">No announcements.</div>{% endfor %}</div>
+{% endblock %}

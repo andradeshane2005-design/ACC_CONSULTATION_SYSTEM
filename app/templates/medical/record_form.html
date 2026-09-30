@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if record else 'New' }} Medical Record{% endblock %}
+{% block content %}
+<div class="page-head"><div><span class="eyebrow">MEDICAL RECORD</span><h1>{{ 'Edit record' if record else 'New medical record' }}</h1><p>Handle health information carefully and only for authorized purposes.</p></div></div>
+<form method="post" class="card form-grid">
+<label>Student<select name="student_id" required>{% for s in students %}<option value="{{ s.id }}" {% if record and record.student_id == s.id %}selected{% endif %}>{{ s.full_name }} — {{ s.student_id or s.email }}</option>{% endfor %}</select></label>
+<label>Blood type<input name="blood_type" value="{{ record.blood_type if record else '' }}" placeholder="e.g. O+"></label>
+<label>Allergies<textarea name="allergies" rows="4">{{ record.allergies if record else '' }}</textarea></label>
+<label>Medical conditions<textarea name="medical_conditions" rows="4">{{ record.medical_conditions if record else '' }}</textarea></label>
+<label>Medications<textarea name="medications" rows="4">{{ record.medications if record else '' }}</textarea></label>
+<label>Emergency contact<input name="emergency_contact" value="{{ record.emergency_contact if record else '' }}"></label>
+<label>Emergency phone<input name="emergency_phone" value="{{ record.emergency_phone if record else '' }}"></label>
+<label class="full-span">Notes<textarea name="notes" rows="5">{{ record.notes if record else '' }}</textarea></label>
+<div class="full-span form-actions"><a class="btn" href="{{ url_for('medical.records') }}">Cancel</a><button class="btn btn-primary">Save Record</button></div>
+</form>
+{% endblock %}
